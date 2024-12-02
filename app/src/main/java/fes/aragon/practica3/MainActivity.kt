@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
 import androidx.core.widget.doAfterTextChanged
 
@@ -77,7 +78,35 @@ class MainActivity : AppCompatActivity() {
 
         botonLeer.setOnClickListener {
 
-            abrirArchivo()
+            if(!this.cambiosGuardados) {
+
+                val popup = AlertDialog.Builder(this)
+
+                popup.setTitle("Guardar")
+
+                popup.setMessage("¿Deseas guardar los cambios antes de continuar?")
+
+                popup.setPositiveButton("Sí") { dialog, _->
+
+                    this.crearArchivo()
+
+                }
+
+                popup.setNegativeButton("No") {dialog, _->
+
+                    dialog.dismiss()
+
+                    abrirArchivo()
+
+                }
+
+                popup.show()
+
+            }else {
+
+                abrirArchivo()
+
+            }
 
         }
 
@@ -153,6 +182,8 @@ class MainActivity : AppCompatActivity() {
             this.nombreArchivo = this.obtenerNombre(uri)
 
             this.titulo.text = this.nombreArchivo ?: "Escribe un mensaje"
+
+            this.cambiosGuardados = true
 
         }
 
