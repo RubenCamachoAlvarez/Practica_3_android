@@ -12,7 +12,6 @@ import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.core.net.toFile
 import androidx.core.widget.doAfterTextChanged
 
 
@@ -61,6 +60,8 @@ class MainActivity : AppCompatActivity() {
             result -> if(result.resultCode == RESULT_OK) {
 
                 val uri = result.data?.data
+
+                Log.i("NOMBRE ARCHIVO SELECCIONADO", this.obtenerNombre(uri!!)!!)
 
                 uri?.let { escribirContenidoArchivo(it) }
 
